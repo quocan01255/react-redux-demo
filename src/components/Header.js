@@ -1,6 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import { memo, useContext } from 'react';
-import { CategoriesContext } from '../App.js'
+import { CategoriesContext } from './HomePage.js'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../auth/login/ActionCreators.js';
 
 function NavItem({ title, navTo, accessToCart }) {
     const handleNavClick = () => {
@@ -15,7 +17,7 @@ function NavItem({ title, navTo, accessToCart }) {
     )
 }
 
-function Header({navTo, accessToCart }) {
+function Header({ navTo, accessToCart }) {
     const categories = useContext(CategoriesContext)
 
     const handleHomeClick = () => {
@@ -27,6 +29,12 @@ function Header({navTo, accessToCart }) {
         accessToCart(true)
     }
 
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <a className="navbar-brand" href="#" onClick={handleHomeClick}>Home</a>
@@ -37,9 +45,12 @@ function Header({navTo, accessToCart }) {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
                     {categories.map(category => (
-                        <NavItem key={category} title={category} navTo={navTo} accessToCart={accessToCart}/>
+                        <NavItem key={category} title={category} navTo={navTo} accessToCart={accessToCart} />
                     ))}
                 </ul>
+            </div>
+            <div>
+                <button onClick={handleLogout}>Logout</button>
             </div>
         </nav>
     )
