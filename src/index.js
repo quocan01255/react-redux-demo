@@ -9,7 +9,10 @@ import reducer from './services/count/reducer.js'
 import apiReducer from './services/call-api/reducer.js'
 import thunk from "redux-thunk" 
 
-const store = createStore(apiReducer, applyMiddleware(thunk));
+import loginReducer from './auth/login/loginReducer.js';
+
+const appReducer = combineReducers({loginReducer,apiReducer })
+const store = createStore(appReducer, applyMiddleware(thunk));
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
